@@ -10,7 +10,7 @@ skip_project="apim-conn"
 root_dir="C:/Users/gdev/WebstormProjects/$root/"
 
 #root_dir="`pwd`"
-working_branch="devint"
+working_branch="develop"
 
 #echo "Processing Project: $root_dir"
 
