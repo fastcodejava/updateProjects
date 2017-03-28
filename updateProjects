@@ -1,5 +1,5 @@
 #! /bin/bash
-##Author: Sameer Siddiqui and Gautam Dev
+##Author: Gautam Dev
 ##This Script Updates all the APIM Projects and Libraries locally
 ##Usage: updateProjects.sh apim update
 
