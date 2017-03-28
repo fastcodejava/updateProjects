@@ -1,0 +1,69 @@
+#! /bin/bash
+##Author: Sameer Siddiqui and Gautam Dev
+##This Script Updates all the APIM Projects and Libraries locally
+##Usage: updateProjects.sh apim update
+
+root=${1}
+choice=${2}
+project=${3}
+skip_project="apim-conn"
+root_dir="C:/Users/gdev/WebstormProjects/$root/"
+
+#root_dir="`pwd`"
+working_branch="devint"
+
+#echo "Processing Project: $root_dir"
+
+
+##Entry Point Of Script
+cd $root_dir
+
+	for dir in $root_dir*/
+	do 
+		cd "$dir"
+		#echo "Processing Project: $dir"
+			if [ "$project" != "" ]; then
+				if [ "$root_dir$project/" != "$dir" ]; then
+					continue
+				fi
+			else
+				if [ "$root_dir$skip_project/" == "$dir" ]; then
+					continue
+				fi
+			fi
+			echo "--------------------------------------$dir---------------------------------"
+			if [ "$choice" = "update" ] ; then
+				current_branch=$(git rev-parse --abbrev-ref HEAD)
+					if [ "$current_branch" != "$working_branch" ]; then
+						echo -e "Current branch is $current_branch. Checking out $working_branch branch"
+						git fetch origin >> /dev/null
+						working_branch_status=$(git checkout $working_branch)
+						#echo "---------------------- $working_branch_status"
+						if [[ "$working_branch_status" == "Your branch is up-to-date"* ]]
+						then
+							echo "$working_branch is up to date"
+						else
+							git pull >> /dev/null
+						fi
+						#echo "Done: Project at location $dir pulled successfully"
+					else		 			
+						git fetch origin >> /dev/null
+						#git checkout "$working_branch" >> /dev/null
+						git_pull_status=$(git pull)
+						#git pull >> /dev/null
+						if [ "$git_pull_status" != "Already up-to-date." ]; then
+							echo "$git_pull_status"
+						fi
+					fi
+				if [ $? -eq 0 ] ; then
+					echo ""
+				else 
+					echo "---------------------------------Error $dir---------------------------------"
+				fi
+			elif [ "$choice" = "status" ] ; then
+				git status
+				echo "---------------------------------Done $dir---------------------------------"
+			else 
+				echo "Skipping : $dir"
+			fi
+	done
