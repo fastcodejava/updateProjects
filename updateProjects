@@ -1,15 +1,15 @@
 #! /bin/bash
 ##Author: Gautam Dev
 ##This Script Updates all the APIM Projects and Libraries locally
-##Usage: updateProjects.sh apim update
+##Usage: updateProjects.sh dir "update"
 
 root=${1}
 choice=${2}
 project=${3}
 skip_project="apim-conn"
-root_dir="C:/Users/gdev/WebstormProjects/$root/"
 
-#root_dir="`pwd`"
+root_dir="`pwd`"
+root_dir="$root_dir/$root"
 working_branch="develop"
 
 #echo "Processing Project: $root_dir"
@@ -18,7 +18,7 @@ working_branch="develop"
 ##Entry Point Of Script
 cd $root_dir
 
-	for dir in $root_dir*/
+	for dir in $root_dir/*
 	do 
 		cd "$dir"
 		#echo "Processing Project: $dir"
